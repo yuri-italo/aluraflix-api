@@ -1,9 +1,8 @@
 package br.com.alura.aluraflixapi.controller;
 
 import br.com.alura.aluraflixapi.dto.VideoDto;
-import br.com.alura.aluraflixapi.model.Video;
+import br.com.alura.aluraflixapi.form.VideoForm;
 import br.com.alura.aluraflixapi.service.VideoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/videos")
@@ -30,52 +27,30 @@ public class VideoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> save(@Valid @RequestBody VideoDto videoDto, UriComponentsBuilder uriBuilder) {
-        Video video = new Video();
-        BeanUtils.copyProperties(videoDto,video);
-        videoService.save(video);
-
-        URI uri = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(video);
+    public ResponseEntity<VideoDto> save(@Valid @RequestBody VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+        VideoDto videoDto = videoService.save(videoForm);
+        return ResponseEntity.created(uriBuilder.path("/videos/{id}").buildAndExpand(videoDto.getId()).toUri()).body(videoDto);
     }
 
     @GetMapping
-    public ResponseEntity<Page<Video>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<Page<VideoDto>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(videoService.listAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOneById(@PathVariable Long id) {
-        Optional<Video> optional = videoService.findById(id);
-
-        if (optional.isPresent())
-            return ResponseEntity.status(HttpStatus.OK).body(VideoDto.convertToDto(optional.get()));
-        else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video not found!");
+    public ResponseEntity<?> getOneById(@PathVariable Long id)  {
+        return videoService.getById(id);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody VideoDto videoDto) {
-        Optional<Video> optional = videoService.findById(id);
-
-        if (optional.isPresent())
-            return ResponseEntity.status(HttpStatus.OK).body(videoService.update(optional.get(),videoDto));
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video not found!");
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody VideoForm videoForm) {
+        return videoService.update(id,videoForm);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<Video> optional = videoService.findById(id);
-
-        if (optional.isPresent()) {
-            videoService.delete(optional.get());
-            return ResponseEntity.status(HttpStatus.OK).body("Video deleted!");
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video not found!");
+        return videoService.deleteById(id);
     }
 }

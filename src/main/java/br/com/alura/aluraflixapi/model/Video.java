@@ -14,20 +14,20 @@ public class Video {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "'Title' must not be null.")
-    @NotEmpty(message = "'Title' must not be empty.")
-    @Length(max = 70, message = "'Title' size must be within 70.")
+    @NotNull(message = "Title must not be null.")
+    @NotEmpty(message = "Title must not be empty.")
+    @Length(max = 70, message = "Title size must be within 70.")
     @Column(unique=true)
     private String title;
 
-    @NotNull(message = "'Description' must not be null.")
-    @NotEmpty(message = "'Description' must not be empty.")
-    @Length(max = 5000, message = "'Description' size must be within 5000.")
+    @NotNull(message = "Description must not be null.")
+    @NotEmpty(message = "Description must not be empty.")
+    @Length(max = 5000, message = "Description size must be within 5000.")
     private String description;
 
-    @NotNull(message = "'URL' must not be null.")
-    @NotEmpty(message = "'URL' must not be empty.")
-    @Length(max = 2048, message = "'URL' size must be within 2048.")
+    @NotNull(message = "URL must not be null.")
+    @NotEmpty(message = "URL must not be empty.")
+    @Length(max = 2048, message = "URL size must be within 2048.")
     @Column(unique=true)
     @URL(message = "Invalid URL.")
     private String url;

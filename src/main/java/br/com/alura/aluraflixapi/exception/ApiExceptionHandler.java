@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.metadata.ConstraintDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -48,8 +47,6 @@ public class ApiExceptionHandler {
         List<ExceptionDto> exceptionDtoList = new ArrayList<>();
 
         constraintViolations.forEach(e -> {
-            ConstraintDescriptor<?> constraintDescriptor = e.getConstraintDescriptor();
-
             ExceptionDto error = new ExceptionDto(HttpStatus.BAD_REQUEST,e.getMessage());
             exceptionDtoList.add(error);
         });
