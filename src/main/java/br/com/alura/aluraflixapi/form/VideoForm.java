@@ -1,19 +1,22 @@
 package br.com.alura.aluraflixapi.form;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class VideoForm {
-    @NotNull(message = "Title must not be null.")
-    @NotEmpty(message = "Title must not be empty.")
+    @NotBlank(message = "Title must not be empty.")
+    @Size(max = 70, message = "Title size must be within 70.")
     private String title;
 
-    @NotNull(message = "Description must not be null.")
-    @NotEmpty(message = "Description must not be empty.")
+    @NotBlank(message = "Description must not be empty.")
+    @Size(max = 5000, message = "Description size must be within 5000.")
     private String description;
 
-    @NotNull(message = "URL must not be null.")
-    @NotEmpty(message = "URL must not be empty.")
+    @NotBlank(message = "URL must not be empty.")
+    @Size(max = 2048, message = "URL size must be within 2048.")
+    @URL(message = "Invalid URL.")
     private String url;
 
     public VideoForm() {

@@ -22,9 +22,9 @@ public class VideoService {
         this.videoRepository = videoRepository;
     }
 
-    public VideoDto save(VideoForm videoFormDto) {
+    public VideoDto save(VideoForm videoForm) {
         Video video = new Video();
-        BeanUtils.copyProperties(videoFormDto,video);
+        BeanUtils.copyProperties(videoForm,video);
 
         videoRepository.save(video);
 
