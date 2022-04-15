@@ -20,6 +20,10 @@ public class CategoryDto {
         return ResponseEntity.status(HttpStatus.OK).body(categories.map(CategoryDto::new));
     }
 
+    public static CategoryDto convertToDto(Category category) {
+        return new CategoryDto(category);
+    }
+
     public Long getId() {
         return id;
     }

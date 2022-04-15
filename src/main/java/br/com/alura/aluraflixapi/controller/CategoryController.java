@@ -1,16 +1,18 @@
 package br.com.alura.aluraflixapi.controller;
 
 import br.com.alura.aluraflixapi.dto.CategoryDto;
+import br.com.alura.aluraflixapi.form.CategoryForm;
 import br.com.alura.aluraflixapi.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/categories")
@@ -19,6 +21,12 @@ public class CategoryController {
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
+    }
+    @PostMapping
+    @Transactional
+    public ResponseEntity<CategoryDto> save(@RequestBody @Valid CategoryForm categoryForm, UriComponentsBuilder uriBuilder) {
+        CategoryDto categoryDto = categoryService.save(categoryForm);
+        return ResponseEntity.created(uriBuilder.path("/categories/{id}").buildAndExpand(categoryDto.getId()).toUri()).body(categoryDto);
     }
 
     @GetMapping

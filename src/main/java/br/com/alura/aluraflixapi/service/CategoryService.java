@@ -2,8 +2,10 @@ package br.com.alura.aluraflixapi.service;
 
 import br.com.alura.aluraflixapi.dto.CategoryByIdDto;
 import br.com.alura.aluraflixapi.dto.CategoryDto;
+import br.com.alura.aluraflixapi.form.CategoryForm;
 import br.com.alura.aluraflixapi.model.Category;
 import br.com.alura.aluraflixapi.repository.CategoryRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -33,5 +35,14 @@ public class CategoryService {
             return ResponseEntity.status(HttpStatus.OK).body(CategoryByIdDto.convertToDto(optional.get()));
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category ID not found.");
+    }
+
+    public CategoryDto save(CategoryForm categoryForm) {
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryForm,category);
+
+        categoryRepository.save(category);
+
+        return CategoryDto.convertToDto(category);
     }
 }
