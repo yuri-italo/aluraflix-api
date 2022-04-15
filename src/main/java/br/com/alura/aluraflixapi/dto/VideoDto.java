@@ -2,6 +2,8 @@ package br.com.alura.aluraflixapi.dto;
 
 import br.com.alura.aluraflixapi.model.Video;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -38,8 +40,8 @@ public class VideoDto {
         return new VideoDto(video);
     }
 
-    public static Page<VideoDto> convertManyToDto(Page<Video> videos) {
-        return videos.map(VideoDto::new);
+    public static ResponseEntity<Page<VideoDto>> convertManyToDto(Page<Video> videos) {
+        return ResponseEntity.status(HttpStatus.OK).body(videos.map(VideoDto::new));
     }
 
     public Long getId() {

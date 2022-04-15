@@ -31,7 +31,7 @@ public class VideoService {
         return  VideoDto.convertToDto(video);
     }
 
-    public Page<VideoDto> listAll(Pageable pageable) {
+    public ResponseEntity<Page<VideoDto>> listAll(Pageable pageable) {
         Page<Video> videos = videoRepository.findAll(pageable);
 
         return VideoDto.convertManyToDto(videos);
