@@ -49,7 +49,7 @@ public class VideoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         return videoService.deleteById(id);
     }
 }

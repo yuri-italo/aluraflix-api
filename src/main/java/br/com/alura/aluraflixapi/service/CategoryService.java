@@ -61,4 +61,15 @@ public class CategoryService {
 
         return ResponseEntity.status(HttpStatus.OK).body(CategoryByIdDto.convertToDto(category));
     }
+
+    public ResponseEntity<?> deleteById(Long id) {
+        Optional<Category> optional = categoryRepository.findById(id);
+
+        if (optional.isPresent()) {
+            categoryRepository.delete(optional.get());
+            return ResponseEntity.status(HttpStatus.OK).body("Category deleted.");
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category ID does not exist.");
+    }
 }
