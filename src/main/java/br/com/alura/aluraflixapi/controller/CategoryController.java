@@ -37,4 +37,9 @@ public class CategoryController {
     public ResponseEntity<?> getOneById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody @Valid CategoryForm categoryForm) {
+        return categoryService.update(id,categoryForm);
+    }
 }

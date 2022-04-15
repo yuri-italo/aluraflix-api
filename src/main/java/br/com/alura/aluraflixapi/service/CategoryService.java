@@ -45,4 +45,20 @@ public class CategoryService {
 
         return CategoryDto.convertToDto(category);
     }
+
+    public ResponseEntity<?> update(Long id, CategoryForm categoryForm) {
+        Optional<Category> optional = categoryRepository.findById(id);
+
+        if (optional.isPresent())
+            return updateFields(categoryForm,optional.get());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category ID not found.");
+    }
+
+    private ResponseEntity<?> updateFields(CategoryForm categoryForm, Category category) {
+        category.setTitle(categoryForm.getTitle());
+        category.setColor(categoryForm.getColor());
+
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryByIdDto.convertToDto(category));
+    }
 }
