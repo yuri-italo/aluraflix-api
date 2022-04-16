@@ -17,6 +17,10 @@ public class Video {
     @Column(unique=true,nullable = false,length = 2048)
     private String url;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    private Category category;
+
     public Video() {
 
     }
@@ -47,5 +51,17 @@ public class Video {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

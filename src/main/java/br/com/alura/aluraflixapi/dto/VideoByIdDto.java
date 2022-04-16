@@ -9,10 +9,13 @@ public class VideoByIdDto {
 
     private final String url;
 
+    private final Long categoryId;
+
     public VideoByIdDto(Video video) {
         this.title = video.getTitle();
         this.description = video.getDescription();
         this.url = video.getUrl();
+        this.categoryId = video.getCategory().getId();
     }
 
     public static VideoByIdDto convertToDto(Video video) {
@@ -29,5 +32,9 @@ public class VideoByIdDto {
 
     public String getUrl() {
         return url;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 }

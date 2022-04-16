@@ -19,6 +19,8 @@ public class VideoForm {
     @URL(message = "Invalid URL.")
     private String url;
 
+    private final Long categoryId = 1L;
+
     public VideoForm() {
     }
 
@@ -32,5 +34,9 @@ public class VideoForm {
 
     public String getUrl() {
         return url;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 }

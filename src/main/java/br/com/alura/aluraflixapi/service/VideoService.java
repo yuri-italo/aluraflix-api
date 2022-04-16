@@ -17,14 +17,18 @@ import java.util.Optional;
 @Service
 public class VideoService {
     private final VideoRepository videoRepository;
+    private final CategoryService categoryService;
 
-    public VideoService(VideoRepository videoRepository) {
+    public VideoService(VideoRepository videoRepository, CategoryService categoryService) {
         this.videoRepository = videoRepository;
+        this.categoryService = categoryService;
     }
 
     public VideoDto save(VideoForm videoForm) {
         Video video = new Video();
         BeanUtils.copyProperties(videoForm,video);
+
+        video.setCategory(categoryService.getCategoryById(videoForm.getCategoryId()));
 
         videoRepository.save(video);
 
@@ -59,6 +63,7 @@ public class VideoService {
         video.setTitle(videoForm.getTitle());
         video.setDescription(videoForm.getDescription());
         video.setUrl(videoForm.getUrl());
+        video.setCategory(categoryService.getCategoryById(videoForm.getCategoryId()));
 
         return ResponseEntity.status(HttpStatus.OK).body(new VideoByIdDto(video));
     }

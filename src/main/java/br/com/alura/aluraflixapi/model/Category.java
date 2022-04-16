@@ -1,6 +1,10 @@
 package br.com.alura.aluraflixapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -14,6 +18,10 @@ public class Category {
 
     @Column(unique=true,nullable = false,length = 20)
     private String color;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private Set<Video> videos = new HashSet<>();
 
     public Category() {
     }

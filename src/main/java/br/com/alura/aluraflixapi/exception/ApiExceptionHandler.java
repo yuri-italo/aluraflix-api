@@ -54,9 +54,9 @@ public class ApiExceptionHandler {
         return exceptionDtoList;
     }
 
-    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PSQLException.class)
     public ExceptionDto handle(PSQLException exception) {
-        return new ExceptionDto(HttpStatus.CONFLICT,exception.getMessage());
+        return new ExceptionDto(HttpStatus.BAD_REQUEST,exception.getMessage());
     }
 }

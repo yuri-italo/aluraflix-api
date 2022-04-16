@@ -14,6 +14,8 @@ public class VideoDto {
 
     private String url;
 
+    private Long categoryId;
+
     public VideoDto() {
     }
 
@@ -22,6 +24,7 @@ public class VideoDto {
         this.title = video.getTitle();
         this.description = video.getDescription();
         this.url = video.getUrl();
+        this.categoryId = video.getCategory().getId();
     }
 
     public static VideoDto convertToDto(Video video) {
@@ -46,5 +49,9 @@ public class VideoDto {
 
     public String getUrl() {
         return url;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 }

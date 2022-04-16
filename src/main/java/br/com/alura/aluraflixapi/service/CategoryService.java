@@ -72,4 +72,8 @@ public class CategoryService {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category ID does not exist.");
     }
+
+    public Category getCategoryById(Long id) {
+        return categoryRepository.getById(id);
+    }
 }
