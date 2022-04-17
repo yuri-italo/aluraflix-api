@@ -46,4 +46,9 @@ public class CategoryController {
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         return categoryService.deleteById(id);
     }
+
+    @GetMapping("/{id}/videos")
+    public ResponseEntity<?> getVideosByCategory (@PathVariable Long id) {
+        return categoryService.getVideosByCategory(id);
+    }
 }

@@ -49,4 +49,8 @@ public class Category {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public Set<Video> getVideos() {
+        return videos;
+    }
 }

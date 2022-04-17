@@ -2,6 +2,7 @@ package br.com.alura.aluraflixapi.service;
 
 import br.com.alura.aluraflixapi.dto.CategoryByIdDto;
 import br.com.alura.aluraflixapi.dto.CategoryDto;
+import br.com.alura.aluraflixapi.dto.VideosByCategoryDto;
 import br.com.alura.aluraflixapi.form.CategoryForm;
 import br.com.alura.aluraflixapi.model.Category;
 import br.com.alura.aluraflixapi.repository.CategoryRepository;
@@ -75,5 +76,14 @@ public class CategoryService {
 
     public Category getCategoryById(Long id) {
         return categoryRepository.getById(id);
+    }
+
+    public ResponseEntity<?> getVideosByCategory(Long id) {
+        Optional<Category> optional = categoryRepository.findById(id);
+
+        if (optional.isPresent())
+            return ResponseEntity.status(HttpStatus.OK).body(VideosByCategoryDto.convertToDto(optional.get()));
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category ID not found.");
     }
 }
