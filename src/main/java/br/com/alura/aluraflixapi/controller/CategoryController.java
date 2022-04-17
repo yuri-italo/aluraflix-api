@@ -33,22 +33,25 @@ public class CategoryController {
     public ResponseEntity<Page<CategoryDto>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC)Pageable pageable) {
         return categoryService.listAll(pageable);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneById(@PathVariable Long id) {
         return categoryService.getById(id);
-    }
-    @PutMapping("/{id}")
-    @Transactional
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody @Valid CategoryForm categoryForm) {
-        return categoryService.update(id,categoryForm);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
-        return categoryService.deleteById(id);
     }
 
     @GetMapping("/{id}/videos")
     public ResponseEntity<?> getVideosByCategory (@PathVariable Long id) {
         return categoryService.getVideosByCategory(id);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody @Valid CategoryForm categoryForm) {
+        return categoryService.update(id,categoryForm);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        return categoryService.deleteById(id);
     }
 }

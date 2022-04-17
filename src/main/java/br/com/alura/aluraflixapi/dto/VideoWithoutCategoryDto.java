@@ -4,7 +4,6 @@ import br.com.alura.aluraflixapi.model.Video;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class VideoWithoutCategoryDto {
     private final Long id;

@@ -32,8 +32,10 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<VideoDto>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC) Pageable pageable) {
-        return videoService.listAll(pageable);
+    public ResponseEntity<Page<VideoDto>> getAll(
+            @PageableDefault(sort = "id",direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false) String search) {
+        return videoService.listAll(pageable,search);
     }
 
     @GetMapping("/{id}")

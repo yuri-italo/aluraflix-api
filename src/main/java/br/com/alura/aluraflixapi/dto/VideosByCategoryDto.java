@@ -2,7 +2,6 @@ package br.com.alura.aluraflixapi.dto;
 
 import br.com.alura.aluraflixapi.model.Category;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class VideosByCategoryDto {
