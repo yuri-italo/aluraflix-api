@@ -17,7 +17,7 @@ public class Video {
     @Column(unique=true,nullable = false,length = 2048)
     private String url;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id",referencedColumnName = "id")
     private Category category;
 

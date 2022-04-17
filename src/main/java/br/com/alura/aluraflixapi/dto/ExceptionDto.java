@@ -2,17 +2,25 @@ package br.com.alura.aluraflixapi.dto;
 
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
+
 public class ExceptionDto {
-    private final HttpStatus status;
+    private final LocalDateTime timeStamp;
+    private final HttpStatus httpStatus;
     private final String message;
 
-    public ExceptionDto(HttpStatus status, String error) {
-        this.status = status;
-        this.message = error;
+    public ExceptionDto(HttpStatus status, String message) {
+        this.timeStamp = LocalDateTime.now();
+        this.httpStatus = status;
+        this.message = message;
     }
 
-    public HttpStatus getStatus() {
-        return status;
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 
     public String getMessage() {

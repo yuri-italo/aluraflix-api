@@ -6,10 +6,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -29,7 +31,6 @@ public class ApiExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<ExceptionDto> handle(MethodArgumentNotValidException exception) {
         List<ExceptionDto> exceptionDtoList = new ArrayList<>();
-
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
             String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
@@ -52,6 +53,18 @@ public class ApiExceptionHandler {
         });
 
         return exceptionDtoList;
+    }
+
+    @ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ExceptionDto handle(HttpRequestMethodNotSupportedException exception) {
+        return new ExceptionDto(HttpStatus.METHOD_NOT_ALLOWED, exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ExceptionDto handle(MethodArgumentTypeMismatchException exception) {
+        return new ExceptionDto(HttpStatus.BAD_REQUEST,exception.getMessage());
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
