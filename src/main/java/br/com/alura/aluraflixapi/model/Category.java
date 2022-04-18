@@ -13,10 +13,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique=true,nullable = false,length = 20)
+    @Column(unique=true,nullable = false,length = 30)
     private String title;
 
-    @Column(unique=true,nullable = false,length = 20)
+    @Column(unique=true,nullable = false,length = 30)
     private String color;
 
     @JsonIgnore

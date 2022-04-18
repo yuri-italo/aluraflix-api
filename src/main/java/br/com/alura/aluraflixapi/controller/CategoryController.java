@@ -30,7 +30,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDto>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC)Pageable pageable) {
+    public ResponseEntity<Page<CategoryDto>> getAll(@PageableDefault(sort = "id",direction = Sort.Direction.ASC,size = 5)Pageable pageable) {
         return categoryService.listAll(pageable);
     }
 
