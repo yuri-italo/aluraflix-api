@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface VideoRepository extends JpaRepository<Video,Long> {
     Page<Video> findByTitleContainingIgnoreCase(@Param("search") String search, Pageable pageable);
 
-    @Query(value = "SELECT v FROM Video v WHERE v.id <= 10")
+    @Query(value = "SELECT v FROM Video v WHERE v.category.id = 1")
     Page<Video> getFree(Pageable pageable);
 }
