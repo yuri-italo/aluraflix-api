@@ -54,6 +54,10 @@ public class VideoService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video ID does not exist.");
     }
 
+    public ResponseEntity<Page<VideoDto>> getFreeOnes(Pageable pageable) {
+        return VideoDto.convertManyToDto(videoRepository.getFree(pageable));
+    }
+
     public ResponseEntity<?> update(Long id, VideoForm videoForm) {
         Optional<Video> optional = videoRepository.findById(id);
 

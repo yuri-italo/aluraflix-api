@@ -43,6 +43,11 @@ public class VideoController {
         return videoService.getById(id);
     }
 
+    @GetMapping("/free")
+    public ResponseEntity<Page<VideoDto>> getFree(@PageableDefault(sort = "id",direction = Sort.Direction.ASC,size = 5) Pageable pageable) {
+        return videoService.getFreeOnes(pageable);
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody VideoForm videoForm) {
