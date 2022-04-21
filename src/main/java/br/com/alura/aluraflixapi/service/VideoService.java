@@ -35,7 +35,7 @@ public class VideoService {
         return  VideoDto.convertToDto(video);
     }
 
-    public ResponseEntity<Page<VideoDto>> listAll(Pageable pageable, String search) {
+    public ResponseEntity<Page<VideoDto>> list(Pageable pageable, String search) {
         Page<Video> videos;
         if (search == null)
             videos = videoRepository.findAll(pageable);

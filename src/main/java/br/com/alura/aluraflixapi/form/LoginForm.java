@@ -2,12 +2,14 @@ package br.com.alura.aluraflixapi.form;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class LoginForm {
     @NotBlank(message = "Email must not be empty.")
     @Size(max = 254, message = "Email size must be within 254.")
+    @Email(message = "Invalid Email.")
     private String email;
 
     @NotBlank(message = "Password must not be empty.")
