@@ -31,8 +31,8 @@ public class VideoDto {
         return new VideoDto(video);
     }
 
-    public static ResponseEntity<Page<VideoDto>> convertManyToDto(Page<Video> videos) {
-        return ResponseEntity.status(HttpStatus.OK).body(videos.map(VideoDto::new));
+    public static Page<VideoDto> convertManyToDto(Page<Video> videos) {
+        return videos.map(VideoDto::new);
     }
 
     public Long getId() {
