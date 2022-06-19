@@ -14,8 +14,8 @@ public class UserDto {
         this.email = user.getEmail();
     }
 
-    public static ResponseEntity<Page<UserDto>> convertManyToDto(Page<User> users) {
-        return ResponseEntity.status(HttpStatus.OK).body(users.map(UserDto::new));
+    public static Page<UserDto> convertManyToDto(Page<User> users) {
+        return users.map(UserDto::new);
     }
 
     public Long getId() {
