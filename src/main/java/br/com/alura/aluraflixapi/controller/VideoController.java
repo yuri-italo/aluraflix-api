@@ -3,7 +3,9 @@ package br.com.alura.aluraflixapi.controller;
 import br.com.alura.aluraflixapi.dto.VideoByIdDto;
 import br.com.alura.aluraflixapi.dto.VideoDto;
 import br.com.alura.aluraflixapi.form.VideoForm;
+import br.com.alura.aluraflixapi.model.Category;
 import br.com.alura.aluraflixapi.model.Video;
+import br.com.alura.aluraflixapi.service.CategoryService;
 import br.com.alura.aluraflixapi.service.VideoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -84,7 +87,7 @@ public class VideoController {
 
     @PutMapping("/{id}")
     @Transactional
-    @Operation(summary = "Update one or more video fields.")
+    @Operation(summary = "Update a video.")
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody VideoForm videoForm) {
         Optional<Video> optional = videoService.findById(id);
@@ -96,6 +99,22 @@ public class VideoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new VideoByIdDto(updatedVideo));
     }
+
+    @PatchMapping("/{id}")
+    @Transactional
+    @Operation(summary = "Update one or more fields.")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<?> patch(@PathVariable Long id, @RequestBody Map<String, Object> videoFields) {
+        Optional<Video> videoOptional = videoService.findById(id);
+
+        if (videoOptional.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video ID does not exist.");
+
+        Video updatedVideo = videoService.patch(videoFields,videoOptional.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new VideoByIdDto(updatedVideo));
+    }
+
 
     @DeleteMapping("/{id}")
     @Transactional
